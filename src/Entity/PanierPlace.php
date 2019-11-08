@@ -18,11 +18,13 @@ class PanierPlace
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="id")
      */
     private $user_id;
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="id")
      */
     private $evenement_id;
 

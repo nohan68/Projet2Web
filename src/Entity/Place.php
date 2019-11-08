@@ -18,11 +18,13 @@ class Place
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="id")
      */
     private $commande_id;
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evenement", inversedBy="id")
      */
     private $evenement_id;
 

@@ -18,11 +18,13 @@ class Commande
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="id")
      */
     private $user_id;
 
     /**
      * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat", inversedBy="id")
      */
     private $etat_id;
 
