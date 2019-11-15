@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Evenement;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -16,7 +18,7 @@ class IndexController extends Controller
     /**
      * @Route("/", name="index.index")
      */
-    public function index(Request $request, Environment $twig)
+    public function index(Request $request, Environment $twig, RegistryInterface $doctrine)
     {
 
 //        if(! is_null($this->getUser())){
@@ -33,7 +35,8 @@ class IndexController extends Controller
         }
         if($this->isGranted('ROLE_CLIENT')) {
             // return $this->redirectToRoute('panier.index');
-            return new Response($twig->render('frontOff/frontOFFICE.html.twig'));
+            $evenements=$doctrine->getRepository(Evenement::class)->findAll();
+            return new Response($twig->render('frontOff/frontOFFICE.html.twig',['evenements' => $evenements]));
         }
         return new Response($twig->render('accueil.html.twig'));
 

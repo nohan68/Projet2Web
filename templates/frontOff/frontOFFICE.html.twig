@@ -14,11 +14,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                </tbody>
+                {% for evenement in evenements if evenement is not empty %}
+
+                    <tr>
+                        <td>{{evenement.nom}}</td><td>{{evenement.id}}</td><td>{{evenement.categorie.libelle  | default('pas de type')}}</td>
+                        <td>{{evenement.prix | default('gratuit (ou pas de prix)')}}</td><td>
+                            {{evenement.photo}}</td><td>
+                            <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
+                        </td>
+                        <td>
+                            <a href=""  class="btn btn-primary m-1 p-1">Ajouter</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tbody>
             </table>
             les produits + liens
         </div>
-        <div class="col-5">
+        <div class="col-5;">
             le panier +liens
             <table class="table table-bordered">
                 <caption>Panier</caption>
