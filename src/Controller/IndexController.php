@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Evenement;
+use App\Entity\PanierPlace;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -36,7 +37,8 @@ class IndexController extends Controller
         if($this->isGranted('ROLE_CLIENT')) {
             // return $this->redirectToRoute('panier.index');
             $evenements=$doctrine->getRepository(Evenement::class)->findAll();
-            return new Response($twig->render('frontOff/frontOFFICE.html.twig',['evenements' => $evenements]));
+            $panier=$doctrine->getRepository(PanierPlace::class)->findAll();
+            return new Response($twig->render('frontOff/frontOFFICE.html.twig',['evenements' => $evenements, 'panier'=> $panier]));
         }
         return new Response($twig->render('accueil.html.twig'));
 
