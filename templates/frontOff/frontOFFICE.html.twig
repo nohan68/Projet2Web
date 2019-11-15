@@ -17,7 +17,7 @@
                 {% for evenement in evenements if evenement is not empty %}
 
                     <tr>
-                        <td>{{evenement.nom}}</td><td>{#{evenement.stock}#}</td>
+                        <td>{{evenement.nom}}</td><td>{{evenement.nombrePlaces}}</td>
                         <td>{{evenement.libelle | default('pas de libellé')}}</td><td>
                             {{evenement.prix}}</td><td>
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
