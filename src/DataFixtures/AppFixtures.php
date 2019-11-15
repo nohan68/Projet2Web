@@ -10,6 +10,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Evenement;
 use App\Entity\Categorie;
 use App\Entity\User;
+use Symfony\Component\Validator\Constraints\Date;
+
 //use App\Entity\Commentaire;
 //use App\Entity\Etat;
 //use App\Entity\Panier;
@@ -81,6 +83,7 @@ class AppFixtures extends Fixture
             $new_evenement->setDescription($evenement['description']);
             $new_evenement->setPrix($evenement['prix']);
             $new_evenement->setNombrePlaces(3);
+            $new_evenement->setDate(new \DateTime($evenement['date']));
             $new_evenement->setDisponible(True);
             if(isset($evenement['image']))
                 $new_evenement->setPhoto($evenement['image']);
