@@ -26,10 +26,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class PanierPlaceController extends AbstractController
 {
 
-    public $panier=[
-        [ ]
-    ];
-
     /**
      * @Route("/ajoutPanier/{n}", name="PanierPlace.ajout")
      */
@@ -44,14 +40,5 @@ class PanierPlaceController extends AbstractController
         }
         return new Response($twig->render('accueil.html.twig'));
 
-    }
-
-    /**
-     * @Route("/panier/show", name="PanierPlace.show")
-     */
-    public function showPanier(Request $request, Environment $twig, RegistryInterface $doctrine){
-        $panier=$doctrine->getRepository(PanierPlace::class)->findAll();
-        $evenements=$doctrine->getRepository(Evenement::class)->findAll();
-        return new Response($twig->render('frontOff/frontOFFICE.html.twig', ['panier' => $panier, 'evenements' => $evenements]));
     }
 }

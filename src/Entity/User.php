@@ -35,7 +35,6 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
-
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      */
@@ -89,6 +88,12 @@ class User implements UserInterface, \Serializable
      */
     private $panierPlaces;
 
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $confirmPassword;
+
     // /////////////////
 
     public function __construct()
@@ -98,6 +103,7 @@ class User implements UserInterface, \Serializable
         $this->panierPlaces = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
+        $this->roles = 'ROLE_CLIENT';
     }
 
     public function getUsername()
@@ -329,6 +335,18 @@ class User implements UserInterface, \Serializable
                 $panierPlace->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
+
+    public function setConfirmPassword(string $confirmPassword): self
+    {
+        $this->confirmPassword = $confirmPassword;
 
         return $this;
     }
