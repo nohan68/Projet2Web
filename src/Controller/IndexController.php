@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Evenement;
 use App\Entity\PanierPlace;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -14,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 
-class IndexController extends Controller
+class IndexController extends AbstractController
 {
     /**
      * @Route("/", name="index.index")

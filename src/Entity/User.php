@@ -2,6 +2,8 @@
 // src/Entity/User.php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -9,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Table(name="app_users")
+ * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="cet Email existe déjà")
  * @UniqueEntity(fields="username", message="Nom déjà utilisé")
@@ -76,11 +78,24 @@ class User implements UserInterface, \Serializable
      */
     private $tokenMail = '';
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Commande", mappedBy="user")
+     */
+    private $commandes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PanierPlace", mappedBy="user")
+     */
+    private $panierPlaces;
+
     // /////////////////
 
     public function __construct()
     {
         $this->isActive = true;
+        $this->commandes = new ArrayCollection();
+        $this->panierPlaces = new ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -254,5 +269,67 @@ class User implements UserInterface, \Serializable
     {
         // TODO: Implement __toString() method.
         return "username : ".$this->getUsername()." role: ".$this->getRoles()[0]." mdp:".$this->getPassword();
+    }
+
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): self
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes[] = $commande;
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): self
+    {
+        if ($this->commandes->contains($commande)) {
+            $this->commandes->removeElement($commande);
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PanierPlace[]
+     */
+    public function getPanierPlaces(): Collection
+    {
+        return $this->panierPlaces;
+    }
+
+    public function addPanierPlace(PanierPlace $panierPlace): self
+    {
+        if (!$this->panierPlaces->contains($panierPlace)) {
+            $this->panierPlaces[] = $panierPlace;
+            $panierPlace->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanierPlace(PanierPlace $panierPlace): self
+    {
+        if ($this->panierPlaces->contains($panierPlace)) {
+            $this->panierPlaces->removeElement($panierPlace);
+            // set the owning side to null (unless already changed)
+            if ($panierPlace->getUser() === $this) {
+                $panierPlace->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

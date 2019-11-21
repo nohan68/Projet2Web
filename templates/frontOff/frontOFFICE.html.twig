@@ -6,7 +6,7 @@
 
     <div class="row">
         <div class="col-7">
-            les évènements + liens
+            les produits + liens
             <table class="table table-bordered">
                 <caption>Evènements</caption>
                 <thead>
@@ -23,33 +23,32 @@
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
                         </td>
                         <td>
-                            <a href=""  class="btn btn-primary m-1 p-1">Ajouter</a>
+                            <a href="{{ path('PanierPlace.ajout', {'n': evenement.id}) }}"  class="btn btn-primary m-1 p-1">Ajouter</a>
                         </td>
                     </tr>
                 {% endfor %}
                 <tbody>
             </table>
-            les produits + liens
         </div>
         <div class="col-5; ">
             le panier +liens
             <table class="table table-bordered">
                 <caption>Panier</caption>
                 <thead>
-                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>prix</th><th>prix total</th><th></th><th>supprimer</th>
+                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>Description</th><th>prix total</th><th>photo</th><th>supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for evenement in panier if panier is not empty %}
+                #{% for evenement in panier if panier is not empty %}
 
                     <tr>
                         <td>{{evenement.nom}}</td><td>{{evenement.nombrePlaces}}</td>
                         <td>{{evenement.libelle | default('pas de libellé')}}</td><td>
-                            {{evenement.prix}}</td><td>
+                            {{evenement.prix}}</td><td>{{ evenement.photo }}</td><td>
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
                         </td>
                         <td>
-                            <a href=""  class="btn btn-primary m-1 p-1">Ajouter</a>
+                            <a href=""  class="btn btn-primary m-1 p-1">Supprimer</a>
                         </td>
                     </tr>
                 {% endfor %}
