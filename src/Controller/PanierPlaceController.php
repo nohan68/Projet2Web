@@ -24,10 +24,13 @@ class PanierPlaceController
     /**
      * @Route("/ajoutPanier/{n}", name="PanierPlace.ajout")
      */
-    public function indexClient(Request $request, Environment $twig, $n)
+    public function indexClient(Request $request, Environment $twig,RegistryInterface $doctrine, $n)
     {
         if($this->isGranted('ROLE_CLIENT')) {
-            // return $this->redirectToRoute('client.index');
+            $evenement=$doctrine->getRepository(Evenement::class)->find($n);
+            $panierPlace = new PanierPlace();
+            //$panierPlace->setUserId($this->user);
+
             return $this->redirectToRoute('homepage');
         }
         return new Response($twig->render('accueil.html.twig'));
