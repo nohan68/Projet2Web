@@ -6,4 +6,4 @@ logout:
 
 account_reset_password:
   path: /security/reset_password
-  controller: App\Controller\AccountController::resetPassword
+  controller: App\Controller\SecurityController::forgot

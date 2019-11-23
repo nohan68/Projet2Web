@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +49,13 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function flush()
+    {
+        try {
+            $this->_em->flush();
+        } catch (OptimisticLockException $e) {
+        } catch (ORMException $e) {
+        }
+    }
 }
