@@ -34,7 +34,12 @@ class PanierPlaceController extends AbstractController
         if($this->isGranted('ROLE_CLIENT')) {
             $evenement=$doctrine->getRepository(Evenement::class)->find($n);
             $panierPlace = new PanierPlace();
-            //$panierPlace->setUserId($this->user);
+            $panierPlace->setUser($this->getUser());
+            $panierPlace->setEvenement($evenement);
+            $panierPlace->setQuantite(1);
+            $panierPlace->setDateAjout(new \DateTime(date("Y-m-d")));
+            $doctrine->getManager()->persist($panierPlace);
+            $doctrine->getManager()->flush();
 
             return $this->redirectToRoute('index.index');
         }

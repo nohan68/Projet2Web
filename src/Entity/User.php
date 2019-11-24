@@ -83,10 +83,7 @@ class User implements UserInterface, \Serializable
      */
     private $commandes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PanierPlace", mappedBy="user")
-     */
-    private $panierPlaces;
+
 
     /**
      * @Assert\NotBlank()
