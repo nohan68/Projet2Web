@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    Modifier les coordonnées
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.codePostal) }}
+    {{ form_row(form.ville) }}
+
+    {{ form_row(form.submit, { 'label': 'Valider' }) }}
+
+    {{ form_end(form) }}
+{% endblock %}
