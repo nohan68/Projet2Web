@@ -38,7 +38,7 @@ class IndexController extends AbstractController
         if($this->isGranted('ROLE_CLIENT')) {
             // return $this->redirectToRoute('panier.index');
             $evenements=$doctrine->getRepository(Evenement::class)->findAll();
-            $panier=$doctrine->getRepository(PanierPlace::class)->findEvenements($this->getUser()->getId());
+            $panier=$doctrine->getRepository(PanierPlace::class)->findBy(['user'=>$this->getUser()]);
             dump($panier);
             return new Response($twig->render('frontOff/frontOFFICE.html.twig',['evenements' => $evenements, 'panier'=> $panier]));
         }

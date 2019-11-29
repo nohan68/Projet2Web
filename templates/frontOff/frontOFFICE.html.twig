@@ -35,25 +35,29 @@
             <table class="table table-bordered">
                 <caption>Panier</caption>
                 <thead>
-                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>Description</th><th>prix total</th><th>photo</th><th>supprimer</th>
+                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>Prix</th><th>photo</th><th>supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
-                #{% for evenement in panier if panier is not empty %}
-
+                {% set prixTotal = 0 %}
+                #{% for p in panier if panier is not empty %}
                     <tr>
-                        <td>{{evenement.nom}}</td>
-                        <td>{{evenement.libelle | default('pas de libellé')}}</td><td>
-                            {{evenement.prix}}</td><td>{{ evenement.photo }}</td><td>
-                            <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
+                        <td>{{p.evenement.nom}}</td>
+                        <td>{{p.quantite | default('pas de libellé')}}</td><td>
+                            {{p.evenement.prix}}</td><td>
+                            <img style="width:40px;height:40px" src="{{asset('images/')}}{{p.evenement.photo}}" alt="image de {{p.evenement.nom}}" >
                         </td>
                         <td>
-                            <a href=""  class="btn btn-primary m-1 p-1">Supprimer</a>
+                            <a href="{{ path('PanierPlace.supprimer',{ 'n': p.id }) }}"  class="btn btn-primary m-1 p-1">Supprimer</a>
                         </td>
                     </tr>
+                {% set prixTotal = prixTotal + p.evenement.prix * p.quantite %}
                 {% endfor %}
+
                 <tbody>
             </table>
+            Prix total de la commande : {{ prixTotal }} €
+            <a href="" class="btn btn-primary">Valider la commande</a>
         </div>
 
     </div>
