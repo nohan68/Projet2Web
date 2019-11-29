@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1> Projet 2 web : site de vente Espace Admin </h1>
+
+    <div class="row">
+        <div class="col-7">
+            Mes coordonnées
+            <table class="table table-bordered">
+                <caption>Mes coordonnées</caption>
+                <thead>
+                <tr><th>nom</th><th>adresse mail</th><th>code postal</th><th>ville</th><th>Opération</th></tr>
+                </thead>
+                <tbody>
+                {% for coordonnee in coordonnees if coordonnee is not empty %}
+                    <tr>
+                        <td>{{coordonnee.username}}</td>
+                        <td>{{coordonnee.email}}</td>
+                        <td>{{coordonnee.codePostal}}</td>
+                        <td>{{coordonnee.ville}}</td>
+                        <td><a href="{{ path('Coordonnees.edit', {id: coordonnee.id}) }}"  class="btn btn-primary m-1 p-1">modifier</a></td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
