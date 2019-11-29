@@ -55,7 +55,7 @@ class PanierPlaceRepository extends ServiceEntityRepository
 
         $evenements->select('e.nom', 'e.prix','e.photo')
                     ->from('App\Entity\PanierPlace','panier')
-                    ->leftJoin('App\Entity\Evenement', 'e', Join::WITH,'p.evenement=e')
+                    ->leftJoin('App\Entity\Evenement', 'e', Join::WITH,'p.evenement=e.id')
                     ->where('panier.user=?1')
                     ->setParameter(1, $user);
         $evenements = $evenements->getQuery()->getResult();

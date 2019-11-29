@@ -96,4 +96,15 @@ class PanierPlaceController extends AbstractController
         return new Response($twig->render('accueil.html.twig'));
 
     }
+
+    /**
+     * @Route("/panier/delete", name="PanierPlace.delete")
+     */
+    public function deletePanierPlace(Request $request, Environment $twig, RegistryInterface $doctrine)
+    {
+        $panier=$doctrine->getRepository(PanierPlace::class)->find($request->query->get('evenement_id'));
+        $doctrine->getEntityManager()->remove($panier);
+        $doctrine->getEntityManager()->flush();
+        return $this->redirectToRoute('index.index');
+    }
 }

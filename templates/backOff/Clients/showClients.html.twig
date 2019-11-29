@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1> Projet 2 web : site de vente Espace Admin </h1>
+
+    <div class="row">
+        <div class="col-7">
+            Liste des clients
+            <table class="table table-bordered">
+                <caption>Liste des clients</caption>
+                <thead>
+                <tr><th>nom</th><th>adresse mail</th><th>code postal</th><th>ville</th></tr>
+                </thead>
+                <tbody>
+                {% for client in clients if client is not empty %}
+
+                    <tr>
+                        <td>{{client.username}}</td>
+                        <td>{{client.email}}</td>
+                        <td>{{client.codePostal}}</td>
+                        <td>{{client.ville}}</td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}
