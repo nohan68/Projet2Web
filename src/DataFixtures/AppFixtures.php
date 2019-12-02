@@ -13,7 +13,7 @@ use App\Entity\User;
 use Symfony\Component\Validator\Constraints\Date;
 
 //use App\Entity\Commentaire;
-//use App\Entity\Etat;
+use App\Entity\Etat;
 //use App\Entity\Panier;
 //use App\Entity\Commande;
 //use App\Entity\LigneCommande;
@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         $this->loadUsers($manager);
         $this->loadEvenements($manager);
 
-//        $this->loadEtatsCommandes($manager);
+        $this->loadEtatsCommandes($manager);
     }
 
 
@@ -128,16 +128,16 @@ class AppFixtures extends Fixture
         $manager->flush();
 
     }
-//    public function loadEtatsCommandes(objectManager $manager)
-//    {
-//        // état de la commande
-//        $etat1 = new Etat();
-//        $etat1->setNom('A préparer');
-//        $manager->persist($etat1);
-//        $etat2 = new Etat();
-//        $etat2->setNom('Expédié');
-//        $manager->persist($etat2);
-//        $manager->flush();
-//    }
+    public function loadEtatsCommandes(objectManager $manager)
+    {
+       // état de la commande
+         $etat1 = new Etat();
+        $etat1->setNom('A préparer');
+        $manager->persist($etat1);
+        $etat2 = new Etat();
+        $etat2->setNom('Expédié');
+        $manager->persist($etat2);
+        $manager->flush();
+    }
 
 }

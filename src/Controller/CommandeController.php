@@ -50,19 +50,18 @@ class CommandeController extends AbstractController
         if($this->isGranted('ROLE_CLIENT')) {
 
             $commande = new Commande();
-            $etat = new Etat();
-            $etat->setNom('En attente');
+            $etat = $doctrine->getRepository(Etat::class)->find(1);
             $commande->setDate(new \DateTime(date('Y-m-d')));
             $commande->setUser($this->getUser());
             $commande->setEtat($etat);
 
             $doctrine->getManager()->persist($commande);
             $panier_place=$doctrine->getRepository(PanierPlace::class)->findAll();
+            $doctrine->getManager()->flush();
             foreach ($panier_place as $place){
                 $doctrine->getManager()->remove($place);
             }
             $doctrine->getManager()->flush();
-
             return $this->redirectToRoute('index.index');
         }
         return new Response($twig->render('accueil.html.twig'));

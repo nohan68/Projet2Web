@@ -35,7 +35,7 @@
             <table class="table table-bordered">
                 <caption>Panier</caption>
                 <thead>
-                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>Prix</th><th>photo</th><th>supprimer</th>
+                <tr><th>Nom de l'évènement</th><th>nombre de place</th><th>Photo</th><th>supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,7 +43,7 @@
                 #{% for p in panier if panier is not empty %}
                     <tr>
                         <td>{{p.evenement.nom}}</td>
-                        <td>{{p.quantite | default('pas de libellé')}}</td><td>
+                        <td><a href="{{ path('PanierPlace.decrementerEvenementPanier', {id: p.evenement.id}) }}" class="btn btn-primary">-</a> x{{ p.quantite }} <a href="{{ path('PanierPlace.incrementerEvenementPanier', {id: p.evenement.id}) }}" class="btn btn-primary">+</a></td>
                             {{p.evenement.prix}}</td><td>
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{p.evenement.photo}}" alt="image de {{p.evenement.nom}}" >
                         </td>
