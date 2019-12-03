@@ -15,7 +15,7 @@
                     Commandes
                 </a>
                 <div class="dropdown-menu" aria-labelledby="DropdownCommandes">
-                    <a class="dropdown-item" href="{#{  path('panier.show') }#}">Faire une commande(Evenements/panier)</a>
+                    <a class="dropdown-item" href="/">Faire une commande(Evenements/panier)</a>
                 </div>
             </li>
 
@@ -34,7 +34,7 @@
                     mon compte
                 </a>
                 <div class="dropdown-menu" aria-labelledby="DropdownComptes">
-                    <a class="dropdown-item" href="{#{ path('commande.showAllCommandes') }#}">mes commandes</a>
+                    <a class="dropdown-item" href="{{ path('MesCommandes.show') }}">mes commandes</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ path('Coordonnees.show') }}">mes coordonnées</a>
 
@@ -58,7 +58,7 @@
                 <a class="btn btn-outline-success" type="button" href="{{path('login') }}">
                     Se connecter
                 </a>
-                <a class="btn btn-outline-success" type="button" href="{{path('account_reset_password') }}">
+                <a class="btn btn-outline-success" type="button" href="{##}{path('account_reset_password') }}">
                     mot de passe oublié
                 </a>
             {% endif %}

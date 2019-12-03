@@ -65,7 +65,21 @@ class CommandeController extends AbstractController
             return $this->redirectToRoute('index.index');
         }
         return new Response($twig->render('accueil.html.twig'));
-
     }
 
+    /**
+     * @Route("/commandeClient/show", name="MesCommandes.show")
+     */
+    public function showCommandeClient(Request $request, Environment $twig, RegistryInterface $doctrine)
+    {
+        $commandes=$doctrine->getRepository(Commande::class)->findAll();
+        return new Response($twig->render('frontOff/Commande/showCommandes.html.twig', ['commandes' => $commandes]));
+    }
+
+    /**
+     * @Route("/commande/show", name="Commande.expedier")
+     */
+    public function expedierCommande(Request $request, Environment $twig, RegistryInterface $doctrine){
+
+    }
 }

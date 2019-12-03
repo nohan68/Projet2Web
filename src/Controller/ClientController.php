@@ -34,7 +34,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;  // annotation se
 class ClientController extends AbstractController {
 
     /**
-     * @Route("/client/show", name="Client.show")
+     * @Route("/show", name="Client.show")
      */
     public function showClient(Request $request, Environment $twig, RegistryInterface $doctrine)
     {

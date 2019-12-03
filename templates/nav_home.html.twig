@@ -13,7 +13,7 @@
                     Produits
                 </a>
                 <div class="dropdown-menu" aria-labelledby="DropdownCommandes">
-                    <a class="dropdown-item" href="">Afficher les produits</a>
+                    <a class="dropdown-item" href="{{ path('Produit.showProduits') }}">Afficher les produits</a>
                 </div>
             </li>
         </ul>
@@ -37,10 +37,6 @@
                 </a>
                 <a class="btn btn-outline-success" type="button" href="{{ path('app_register') }}">
                     s'inscrire
-                </a>
-
-                <a class="btn btn-outline-success" type="button" href="{{ path('account_reset_password') }}">
-                    mot de passe oublié
                 </a>
             {% endif %}
 

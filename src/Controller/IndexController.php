@@ -62,4 +62,14 @@ class IndexController extends AbstractController
         return new Response($twig->render('accueil.html.twig'));
 
     }
+
+    /**
+     * @Route("/visiteur", name="Produit.showProduits")
+     */
+    public function showProduits(Request $request, Environment $twig, RegistryInterface $doctrine)
+    {
+        $evenements=$doctrine->getRepository(Evenement::class)->findAll();
+        return new Response($twig->render('frontOff/showProduits.html.twig', ['evenements' => $evenements]));
+
+    }
 }
