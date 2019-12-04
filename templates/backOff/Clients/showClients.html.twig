@@ -10,7 +10,7 @@
             <table class="table table-bordered">
                 <caption>Liste des clients</caption>
                 <thead>
-                <tr><th>nom</th><th>adresse mail</th><th>code postal</th><th>ville</th></tr>
+                <tr><th>nom</th><th>adresse mail</th><th>code postal</th><th>ville</th><th>Action</th></tr>
                 </thead>
                 <tbody>
                 {% for client in clients if client is not empty %}
@@ -20,6 +20,7 @@
                         <td>{{client.email}}</td>
                         <td>{{client.codePostal}}</td>
                         <td>{{client.ville}}</td>
+                        <td><a href="{{ path('Client.delete', {id: client.id, user: client.username}) }}"  class="btn btn-primary m-1 p-1">Supprimer</a></td>
                     </tr>
                 {% endfor %}
                 <tbody>

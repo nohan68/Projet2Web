@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Form\CoordonneeType;
+use App\Form\ResetPasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;

@@ -8,7 +8,11 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Commande;
+use App\Entity\Etat;
 use App\Entity\User;
+use App\Form\CoordonneeType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -41,5 +45,28 @@ class ClientController extends AbstractController {
         $clients=$doctrine->getRepository(User::class)->findAll();
         return new Response($twig->render('backOff/Clients/showClients.html.twig', ['clients' => $clients]));
 
+    }
+
+    /**
+     * @Route("/client/delete", name="Client.delete")
+     */
+    public function deleteClient(Request $request, Environment $twig, RegistryInterface $doctrine, FormFactoryInterface $formFactory)
+    {
+        $user=$doctrine->getRepository(User::class)->find($request->query->get('id'));
+        $doctrine->getEntityManager()->remove($user);
+        $doctrine->getEntityManager()->flush();
+        return $this->redirectToRoute('Client.show');
+    }
+
+    /**
+     * @Route("/commande/show", name="Commande.expedier")
+     */
+    public function expedierCommande(Request $request, Environment $twig, RegistryInterface $doctrine){
+        $commande=$doctrine->getRepository(Commande::class)->find($request->query->get('id'));
+        $etat = $doctrine->getRepository(Etat::class)->find(2);
+        $commande->setEtat($etat);
+        $doctrine->getManager()->persist($commande);
+        $doctrine->getEntityManager()->flush();
+        return $this->redirectToRoute('Commande.show');
     }
 }
