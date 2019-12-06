@@ -81,7 +81,7 @@ class CommandeController extends AbstractController
      */
     public function commandeDetails(Request $request, Environment $twig, RegistryInterface $doctrine)
     {
-        $commandes=$doctrine->getRepository(Commande::class)->find([$request->query->get('id')]);
+        $commandes=$doctrine->getRepository(Commande::class)->find($request->query->get('id'));
         return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['commande' => $commandes]));
     }
 }
