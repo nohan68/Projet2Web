@@ -17,13 +17,27 @@
                 {% for evenement in evenements if evenement is not empty %}
 
                     <tr>
-                        <td>{{evenement.nom}}</td><td>{{evenement.nombrePlaces}}</td>
+                        <td>{{evenement.nom}}</td>
+                        {% if evenement.nombrePlaces > 0 %}
+                            <td>{{evenement.nombrePlaces}}</td>
+                        {% else %}
+                            <td class="alert alert-danger"> Indisponnible </td>
+                        {% endif %}
                         <td>{{evenement.description | default('pas de libellé')}}</td><td>
                             {{evenement.prix}}</td><td>
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{evenement.photo}}" alt="image de {{evenement.nom}}" >
                         </td>
                         <td>
-                            <a href="{{ path('PanierPlace.ajout', {'n': evenement.id}) }}"  class="btn btn-primary m-1 p-1">Ajouter</a>
+                            {% if evenement.nombrePlaces > 0 %}
+                            <form action="{{ path('PanierPlace.ajout', {'n': evenement.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="ADD">
+                                <input class="btn btn-primary m-1 p-1" type="submit" value="Ajouter">
+                            </form>
+                            {% else %}
+                                <input type="button" class="btn btn-dark m-1 p-1" value="Ajouter">
+                             {% endif %}
+
+
                         </td>
                     </tr>
                 {% endfor %}
@@ -43,12 +57,29 @@
                 #{% for p in panier if panier is not empty %}
                     <tr>
                         <td>{{p.evenement.nom}}</td>
-                        <td><a href="{{ path('PanierPlace.decrementerEvenementPanier', {id: p.evenement.id}) }}" class="btn btn-primary">-</a> x{{ p.quantite }} <a href="{{ path('PanierPlace.incrementerEvenementPanier', {id: p.evenement.id}) }}" class="btn btn-primary">+</a></td>
+                        <td>
+                            <form class="d-inline" action="{{ path('PanierPlace.decrementerEvenementPanier', {'id': p.evenement.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
+                                <input class="btn btn-primary m-1 p-1" type="submit" value="-">
+                            </form>
+                            x{{ p.quantite }}
+                            <form class="d-inline" action="{{ path('PanierPlace.incrementerEvenementPanier', {'id': p.evenement.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="PUT">
+                                {% if p.evenement.nombrePlaces == 0 %}
+                                <input class="btn btn-dark m-1 p-1" type="button" value="+">
+                                {% else %}
+                                <input class="btn btn-primary m-1 p-1" type="submit" value="+">
+                                {% endif %}
+                            </form>
+                        </td>
                             {{p.evenement.prix}}</td><td>
                             <img style="width:40px;height:40px" src="{{asset('images/')}}{{p.evenement.photo}}" alt="image de {{p.evenement.nom}}" >
                         </td>
                         <td>
-                            <a href="{{ path('PanierPlace.supprimer',{ 'n': p.id }) }}"  class="btn btn-primary m-1 p-1">Supprimer</a>
+                            <form action="{{ path('PanierPlace.supprimer', {'n': p.id}) }}" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input class="btn btn-primary m-1 p-1" type="submit" value="Supprimer">
+                            </form>
                         </td>
                     </tr>
                 {% set prixTotal = prixTotal + p.evenement.prix * p.quantite %}
@@ -57,7 +88,7 @@
                 <tbody>
             </table>
             Prix total de la commande : {{ prixTotal }} €
-            <a href="{{ path('commande.valider') }}" class="btn btn-primary">Valider la commande</a>
+            <a href="{{ path('commande.valider') }}" class="btn btn-primary" onclick="return confirm('Voulez vous valider la commande ?')">Valider la commande</a>
         </div>
 
     </div>

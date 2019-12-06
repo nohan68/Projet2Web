@@ -27,7 +27,7 @@ class PanierPlaceController extends AbstractController
 {
 
     /**
-     * @Route("/ajoutPanier/{n}", name="PanierPlace.ajout")
+     * @Route("/ajoutPanier/{n}", name="PanierPlace.ajout", methods={"ADD"})
      */
     public function ajoutPanier(Request $request, Environment $twig,RegistryInterface $doctrine, $n)
     {
@@ -80,7 +80,7 @@ class PanierPlaceController extends AbstractController
     }
 
     /**
-     * @Route("/supprimerPanier/{n}", name="PanierPlace.supprimer")
+     * @Route("/supprimerPanier/{n}", name="PanierPlace.supprimer" , methods={"DELETE"})
      */
     public function supprimerPanier(Request $request, Environment $twig,RegistryInterface $doctrine, $n)
     {
@@ -97,19 +97,10 @@ class PanierPlaceController extends AbstractController
 
     }
 
-    /**
-     * @Route("/panier/delete", name="PanierPlace.delete")
-     */
-    public function deletePanierPlace(Request $request, Environment $twig, RegistryInterface $doctrine)
-    {
-        $panier=$doctrine->getRepository(PanierPlace::class)->find($request->query->get('evenement_id'));
-        $doctrine->getEntityManager()->remove($panier);
-        $doctrine->getEntityManager()->flush();
-        return $this->redirectToRoute('index.index');
-    }
+
 
     /**
-     * @Route("/incrementerEvenementDansPanier/{id}", name="PanierPlace.incrementerEvenementPanier", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/incrementerEvenementDansPanier/{id}", name="PanierPlace.incrementerEvenementPanier", methods={"PUT"}, requirements={"id"="\d+"})
      */
     public function incrementerEvenementDansPanier(Request $request, Environment $twig, RegistryInterface $doctrine, $id = null)
     {
@@ -133,7 +124,7 @@ class PanierPlaceController extends AbstractController
     }
 
     /**
-     * @Route("/decrementerEvenementDansPanier/{id}", name="PanierPlace.decrementerEvenementPanier", methods={"GET"}, requirements={"id"="\d+"})
+     * @Route("/decrementerEvenementDansPanier/{id}", name="PanierPlace.decrementerEvenementPanier", methods={"PUT"}, requirements={"id"="\d+"})
      */
     public function decrementerEvenementDansPanier(Request $request, Environment $twig, RegistryInterface $doctrine, $id = null)
     {
