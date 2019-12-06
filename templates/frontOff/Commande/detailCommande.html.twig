@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1> Projet 2 web : site de vente Espace client </h1>
+
+    <div class="row">
+        <div class="col-7">
+            Liste de mes produits
+            <table class="table table-bordered">
+                <caption>Liste des produits</caption>
+                <thead>
+                <tr><th>Produits</th></tr>
+                </thead>
+                <tbody>
+                {% for comm in commande if comm is not empty %}
+                    <tr>
+                        <td>{{ comm.user.panierPlaces.evenement.nom }}</td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

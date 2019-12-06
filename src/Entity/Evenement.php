@@ -58,7 +58,10 @@ class Evenement
      */
     private $categorie;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\PanierPlace", mappedBy="evenement")
+     */
+    private $panierPlaces;
 
     public function __construct()
     {

@@ -75,4 +75,13 @@ class CommandeController extends AbstractController
         $commandes=$doctrine->getRepository(Commande::class)->findBy(['user'=>$this->getUser()]);
         return new Response($twig->render('frontOff/Commande/showCommandes.html.twig', ['commandes' => $commandes]));
     }
+
+    /**
+     * @Route("/detailCommande/show", name="MesCommandes.detail")
+     */
+    public function commandeDetails(Request $request, Environment $twig, RegistryInterface $doctrine)
+    {
+        $commandes=$doctrine->getRepository(Commande::class)->find([$request->query->get('id')]);
+        return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['commande' => $commandes]));
+    }
 }

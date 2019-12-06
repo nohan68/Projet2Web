@@ -21,7 +21,7 @@
                         {% if evenement.nombrePlaces > 0 %}
                             <td>{{evenement.nombrePlaces}}</td>
                         {% else %}
-                            <td class="alert alert-danger"> Indisponnible </td>
+                            <td class="alert alert-danger"> Indisponible </td>
                         {% endif %}
                         <td>{{evenement.description | default('pas de libellé')}}</td><td>
                             {{evenement.prix}}</td><td>
@@ -54,7 +54,7 @@
                 </thead>
                 <tbody>
                 {% set prixTotal = 0 %}
-                #{% for p in panier if panier is not empty %}
+                {% for p in panier if panier is not empty %}
                     <tr>
                         <td>{{p.evenement.nom}}</td>
                         <td>

@@ -10,7 +10,7 @@
             <table class="table table-bordered">
                 <caption>Liste des commandes</caption>
                 <thead>
-                <tr><th>id</th><th>date</th><th>etat</th></tr>
+                <tr><th>id</th><th>date</th><th>etat</th><th>Action</th></tr>
                 </thead>
                 <tbody>
                 {% for commande in commandes if commande is not empty %}
@@ -18,6 +18,7 @@
                         <td>{{ commande.id }}</td>
                         <td>{{ commande.date | date('d-m-Y') }}</td>
                         <td>{{ commande.etat.nom }}</td>
+                        <td><a href="{{ path('MesCommandes.detail', {id: commande.id}) }}">Détails</a></td>
                     </tr>
                 {% endfor %}
                 <tbody>
