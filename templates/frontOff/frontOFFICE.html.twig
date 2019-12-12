@@ -90,6 +90,11 @@
             Prix total de la commande : {{ prixTotal }} €
             {% if(panier!=null) %} <a href="{{ path('commande.valider') }}" class="btn btn-primary" onclick="return confirm('Voulez vous valider la commande ?')">Valider la commande</a>{% endif %}
         </div>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
 
     </div>
 

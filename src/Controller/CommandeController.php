@@ -63,12 +63,17 @@ class CommandeController extends AbstractController
                 $nouvellePlace = new Place();
                 $nouvellePlace->setCommande($commande);
                 $nouvellePlace->setEvenement($place->getEvenement());
-                $nouvellePlace->setPrix($place->getEvenement()->getPrix());
+                if($place->getEvenement()->getPrix() == null){
+                    $nouvellePlace->setPrix(0);
+                }else {
+                    $nouvellePlace->setPrix($place->getEvenement()->getPrix());
+                }
                 $nouvellePlace->setQuantite($place->getQuantite());
                 $doctrine->getManager()->remove($place);
                 $doctrine->getManager()->persist($nouvellePlace);
             }
             $doctrine->getManager()->flush();
+            $this->addFlash('success', 'Commande validée');
             return $this->redirectToRoute('index.index');
         }
         return new Response($twig->render('accueil.html.twig'));
