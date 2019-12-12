@@ -37,7 +37,7 @@ class NewMdpController extends AbstractController
 
             if ($user === null) {
                 $this->addFlash('danger', 'Token Inconnu');
-                return $this->redirectToRoute('app_forgotten_password');
+                return $this->redirectToRoute('index.index');
             }
 
             $user->setResetToken(null);
@@ -46,7 +46,7 @@ class NewMdpController extends AbstractController
 
             $this->addFlash('notice', 'Mot de passe mis à jour');
 
-            return $this->redirectToRoute('app_forgotten_password');
+            return $this->redirectToRoute('index.index');
         }else {
 
             return $this->render('security/resetPassword.html.twig', ['token' => $token]);

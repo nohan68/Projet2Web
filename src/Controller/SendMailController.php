@@ -30,30 +30,30 @@ class SendMailController extends AbstractController
 
         if ($request->isMethod('POST')) {
 
-            $email = $request->request->get('email');
+            //$email = $request->request->get('email');
 
-            $user = $doctrine->getRepository(User::class)->find($email);
-            /* @var $user User */
+            $email = $doctrine->getRepository(User::class)->find('email');
 
-            if ($user === null) {
+
+            if ($email === null) {
                 $this->addFlash('danger', 'Email Inconnu');
-                return $this->redirectToRoute('app_forgotten_password');
+                return $this->redirectToRoute('index.index');
             }
             $token = $tokenGenerator->generateToken();
 
             try{
-                $user->setResetToken($token);
+                $email->setResetToken($token);
                 $doctrine->getEntityManager()->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('app_forgotten_password');
+                return $this->redirectToRoute('index.index');
             }
 
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
             $message = (new \Swift_Message('Forgot Password'))
                 ->setFrom('projetweb@dev-web.io')
-                ->setTo($user->getEmail())
+                ->setTo($email->getEmail())
                 ->setBody(
                     "Cliquez sur ce lien pour réinitialiser votre mot de passe : " . $url,
                     'text/html'
@@ -63,7 +63,7 @@ class SendMailController extends AbstractController
 
             $this->addFlash('notice', 'Mail envoyé');
 
-            return $this->redirectToRoute('app_forgotten_password');
+            return $this->redirectToRoute('index.index');
         }
 
         return $this->render('security/forgotPassword.html.twig');
