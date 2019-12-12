@@ -72,13 +72,20 @@ class AccountController extends AbstractController
     /**
      * @Route("/coordonnees/edit", name="Coordonnees.edit")
      */
-    public function editCoordnnees(Request $request, Environment $twig, RegistryInterface $doctrine, FormFactoryInterface $formFactory)
+    public function editCoordnnees(Request $request, Environment $twig, RegistryInterface $doctrine, FormFactoryInterface $formFactory, UserPasswordEncoderInterface $passwordEncoder)
     {
         $coordonnees=$doctrine->getRepository(User::class)->find($request->query->get('id'));
         $form=$formFactory->createBuilder(CoordonneeType::class,$coordonnees)->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $coordonnees->setPassword(
+                $passwordEncoder->encodePassword(
+                    $coordonnees,
+                    $form->get('confirmPassword')->getData()
+                )
+            );
+
             $doctrine->getEntityManager()->flush();
             return $this->redirectToRoute('Coordonnees.show');
         }

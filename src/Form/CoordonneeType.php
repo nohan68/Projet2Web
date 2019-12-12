@@ -11,6 +11,8 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,6 +37,11 @@ class CoordonneeType extends AbstractType
             ->add('email', TextType::class, ['required' => true])
             ->add('codePostal', TextType::class,['required' => false])
             ->add('ville', TextType::class,  ['required' => false])
+            ->add('confirmPassword', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options'  => array('label' => 'Nouveau mot de passe*'),
+                'second_options' => array('label' => 'Répéter le nouveau mot de passe*'),
+            ))
             ->add('submit', SubmitType::class)
             ->getForm()
         ;
