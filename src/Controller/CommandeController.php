@@ -55,12 +55,18 @@ class CommandeController extends AbstractController
             $commande->setDate(new \DateTime(date('Y-m-d')));
             $commande->setUser($this->getUser());
             $commande->setEtat($etat);
-
             $doctrine->getManager()->persist($commande);
+
+
             $panier_place=$doctrine->getRepository(PanierPlace::class)->findAll();
-            $doctrine->getManager()->flush();
             foreach ($panier_place as $place){
+                $nouvellePlace = new Place();
+                $nouvellePlace->setCommande($commande);
+                $nouvellePlace->setEvenement($place->getEvenement());
+                $nouvellePlace->setPrix($place->getEvenement()->getPrix());
+                $nouvellePlace->setQuantite($place->getQuantite());
                 $doctrine->getManager()->remove($place);
+                $doctrine->getManager()->persist($nouvellePlace);
             }
             $doctrine->getManager()->flush();
             return $this->redirectToRoute('index.index');
@@ -77,12 +83,25 @@ class CommandeController extends AbstractController
         return new Response($twig->render('frontOff/Commande/showCommandes.html.twig', ['commandes' => $commandes]));
     }
 
+    /*
     /**
      * @Route("/detailCommande/show", name="MesCommandes.detail")
      */
+    /*
     public function commandeDetails(Request $request, Environment $twig, RegistryInterface $doctrine)
     {
         $produits=$doctrine->getRepository(Commande::class)->findBy(['user'=>$this->getUser()]);
         return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['produits' => $produits]));
+    } */
+
+    /**
+     * @Route("/detailCommande/{id}", name="MesCommandes.detail", methods={"GET"}, requirements={"id"="\d+"})
+     */
+    public function commandeDetails(Request $request, Environment $twig, RegistryInterface $doctrine, $id = null)
+    {
+        $commande = $doctrine->getRepository(Commande::class)->findBy(array('id' => $id));
+        $places = $doctrine->getRepository(Place::class)->findBy(array('commande' => $commande));
+
+        return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['places' => $places]));
     }
 }

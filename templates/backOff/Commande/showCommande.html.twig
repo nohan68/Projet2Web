@@ -21,7 +21,7 @@
                         <td>{{ commande.user.email }}</td>
                         <td>{{commande.date | date('d-m-Y')}}</td>
                         <td>{{commande.etat.nom}}</td>
-                        <td><a href="{{ path('Commande.expedier', { id: commande.id }) }}">Expédier</a></td>
+                        <td><a href="{{ path('Commande.expedier', { id: commande.id }) }}">Expédier</a> | <a href="{{ path('MesCommandes.detail', {id: commande.id}) }}">Détails</a></td>
                     </tr>
                 {% endfor %}
                 <tbody>

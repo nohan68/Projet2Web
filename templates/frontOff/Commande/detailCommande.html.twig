@@ -5,22 +5,39 @@
     <h1> Projet 2 web : site de vente Espace client </h1>
 
     <div class="row">
-        <div class="col-7">
-            Liste de mes produits
+        <div class="col-7">Détails de la commande
             <table class="table table-bordered">
-                <caption>Liste des produits</caption>
                 <thead>
-                <tr><th>Produits</th></tr>
+                <tr>
+                    <th>Id</th>
+                    <th>Evenement</th>
+                    <th>Photo</th>
+                    <th>Quantite</th>
+                    <th>Prix</th>
+                </tr>
                 </thead>
                 <tbody>
-                {% for produit in produits if produit is not empty %}
+                {% set prixTotal = 0 %}
+                {% for place in places if places is not empty %}
                     <tr>
-                        <td>{{ produit.user }}</td>
+                        <td>{{place.id}}</td>
+                        <td>{{place.evenement.nom}}</td>
+                        <td>
+                            <img style="width:40px;height:40px" src="{{asset('images/')}}{{place.evenement.photo}}" alt="image de {{place.evenement.nom}}">
+                        </td>
+                        <td>{{place.quantite}}</td>
+                        <td>{{place.prix}}</td>
                     </tr>
+                    {% set prixTotal = prixTotal + place.evenement.prix * place.quantite %}
                 {% endfor %}
-                <tbody>
+                </tbody>
             </table>
+            Prix total de la commande : {{ prixTotal }} €
+            <br>
         </div>
     </div>
+    {% if is_granted('ROLE_CLIENT') %} <a href="{{ path('MesCommandes.show') }}" class="btn btn-primary">Retour aux commandes</a>
+    {% elseif is_granted('ROLE_ADMIN') %} <a href="{{ path('Commande.show') }}" class="btn btn-primary">Retour aux commandes</a> {% endif %}
+
 
 {% endblock %}
