@@ -88,7 +88,7 @@
                 <tbody>
             </table>
             Prix total de la commande : {{ prixTotal }} €
-            <a href="{{ path('commande.valider') }}" class="btn btn-primary" onclick="return confirm('Voulez vous valider la commande ?')">Valider la commande</a>
+            {% if(panier!=null) %} <a href="{{ path('commande.valider') }}" class="btn btn-primary" onclick="return confirm('Voulez vous valider la commande ?')">Valider la commande</a>{% endif %}
         </div>
 
     </div>

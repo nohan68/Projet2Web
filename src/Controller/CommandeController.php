@@ -12,6 +12,7 @@ use App\Entity\Commande;
 use App\Entity\Etat;
 use App\Entity\PanierPlace;
 use App\Entity\Place;
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -81,7 +82,7 @@ class CommandeController extends AbstractController
      */
     public function commandeDetails(Request $request, Environment $twig, RegistryInterface $doctrine)
     {
-        $commandes=$doctrine->getRepository(Commande::class)->find($request->query->get('id'));
-        return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['commande' => $commandes]));
+        $produits=$doctrine->getRepository(Commande::class)->findBy(['user'=>$this->getUser()]);
+        return new Response($twig->render('frontOff/Commande/detailCommande.html.twig', ['produits' => $produits]));
     }
 }

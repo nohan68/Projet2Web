@@ -13,9 +13,9 @@
                 <tr><th>Produits</th></tr>
                 </thead>
                 <tbody>
-                {% for comm in commande if comm is not empty %}
+                {% for produit in produits if produit is not empty %}
                     <tr>
-                        <td>{{ comm.user.panierPlaces.evenement.nom }}</td>
+                        <td>{{ produit.user }}</td>
                     </tr>
                 {% endfor %}
                 <tbody>
