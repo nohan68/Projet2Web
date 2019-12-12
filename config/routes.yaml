@@ -4,6 +4,6 @@
 logout:
   path: /logout
 
-account_reset_password:
-  path: /security/reset_password
-  controller: App\Controller\SecurityController::forgot
+account_forgot_password:
+  path: /security/forgot_password
+  controller: App\Controller\SecurityController::forgottenPassword
